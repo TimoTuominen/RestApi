@@ -1,6 +1,8 @@
 //Lisätään tarvittavat moduulit
 var express = require("express");
+var cors = require("cors");
 var app = express();
+app.use(cors());
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 var mongoose = require("mongoose");
@@ -121,7 +123,7 @@ app.delete("/api/restaurant/delete/:id", function (req, res) {
 });
 
 // Luodaan palvelin
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 8000;
 app.listen(PORT, function () {
   console.log("Example app is listening on port %d", PORT);
 });
