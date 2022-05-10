@@ -27,7 +27,9 @@ const Restaurants = mongoose.model(
   "restaurants"
 );
 
-// Luodaan myöhemmin lisättävä tietue
+// Luodaan myöhemmin lisättävä tietue * Muutettu 4 projektia varten
+
+/*
 let NewRestaurant = new Restaurants({
   address: { building: "Omarakennus", street: "Omakatu", zipcode: 12345 },
   borough: "Manhattan",
@@ -35,6 +37,7 @@ let NewRestaurant = new Restaurants({
   name: "Timpan ravintola",
   restaurant_id: 12345678,
 });
+*/
 
 // Haetaan tiedot tietokannasta, näytetään 15 ensimmäistä
 app.get("/api/restaurant", function (req, res) {
@@ -76,15 +79,24 @@ app.get("/api/restaurant/findbycuisine", function (req, res) {
 });
 
 // Lisätään uusi tietue kantaan
-app.post("/api/restaurant/add", function (req, res) {
-  NewRestaurant.save(function (err, user) {
-    if (err) {
-      res.status(500).json("Ongelma tietoja lisättäessä");
-    } else {
-      res.status(200).json(NewRestaurant);
-    }
-  });
-});
+app.post(
+  "/api/restaurant/add/:name/:borough/:restaurantid",
+  function (req, res) {
+    let NewRestaurant = new Restaurants({
+      borough: req.params.borough,
+      name: req.params.name,
+      restaurant_id: req.params.restaurantid,
+    });
+
+    NewRestaurant.save(function (err, user) {
+      if (err) {
+        res.status(500).json("Ongelma tietoja lisättäessä");
+      } else {
+        res.status(200).json(NewRestaurant);
+      }
+    });
+  }
+);
 
 // Päivitetään olemassa oleva tietue annetun ID:n mukaan
 app.put("/api/restaurant/update/:id/:restid", function (req, res) {
