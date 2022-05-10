@@ -87,9 +87,11 @@ app.post("/api/restaurant/add", function (req, res) {
 });
 
 // Päivitetään olemassa oleva tietue annetun ID:n mukaan
-app.put("/api/restaurant/update/:id", function (req, res) {
+app.put("/api/restaurant/update/:id/:restid", function (req, res) {
   var query = { _id: req.params.id };
-  var newdata = { restaurant_id: 123456 };
+  var newdata = { restaurant_id: req.params.restid };
+  //console.log(req);
+  console.log(newdata);
   var options = { new: true };
   Restaurants.findOneAndUpdate(
     query,
